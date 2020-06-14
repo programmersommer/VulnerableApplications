@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Requisites</h2>
+<p class="swift-css"> SWIFT BIC PJCBBY2X</p>
+<p class="iban-css">IBAN BY93PJCB84311710854000287988</p>
+
+@* Do not remove first empty style {} *@
+<div class="div-with-css">
+    {}
+    .div-with-css {
+        display:none;
+    }
+    .iban-css {
+        display:none;
+    }
+    .swift-css:after {
+        white-space: pre-wrap;
+        content: '\A IBAN WRONG93PJCB84311710854000287988';
+    }
+
+    @*You can even access elements without class attributes*@
+    @*p:nth-child(3) {
+            display:none;
+        }
+        p:nth-child(2):after {
+            white-space: pre-wrap;
+            content: '\A IBAN WRONG93PJCB84311710854000287988';
+        }*@
+</div>
