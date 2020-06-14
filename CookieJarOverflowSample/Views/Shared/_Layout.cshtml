@@ -1,35 +1,17 @@
-﻿@*
-    Path-Relative stylesheet import
-    If Doctype is missing or too old then website page could be loaded in Quirks mode
-    Quirks mode could load webpages with wrong HTML/CSS content
-    When you access the website published to the hosting with two slashes additionally added to URL
-    for example:
-    https://prssi-demo.azurewebsites.net/home/index///
-    (Kind of Path Traversal attack isn't?)
-    And you will see that CSS pasted as text could be handled as css
-    Another option to protect app from this attack is
-    to add X-Content-Type-Options header with nosniff directive
-*@
-
-
-@*<!DOCTYPE html>*@
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PRSSI Sample</title>
+    <title>@ViewData["Title"] - Cookie Jar Overflow Sample</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
-    @*This reference is vulnerable for PRSSI*@
-    <link rel="stylesheet" href="../../style.css" />
-
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PRSSI Sample</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cookie Jar Overflow Sample</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -52,7 +34,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - PRSSI Sample 
+            &copy; 2020 - Cookie Jar Overflow Sample
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
