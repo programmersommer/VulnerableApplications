@@ -46,6 +46,12 @@ namespace PRSSISample
 
             app.UseAuthorization();
 
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            //    await next();
+            //});
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
