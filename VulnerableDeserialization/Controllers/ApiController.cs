@@ -30,7 +30,7 @@ namespace VulnerableDeserialization.Controllers
          will mark appsettings.json as read-only
         */
 
-        [HttpPost()]
+        [HttpPost]
         public IActionResult Deserialize([FromBody] SomeDummyObject param)
         {
 

