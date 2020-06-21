@@ -1,0 +1,26 @@
+﻿@using ParameterTampering.Entities
+@model Article
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<form asp-action="EditArticle" asp-controller="Catalog">
+    <input type="hidden" asp-for="Id" />
+
+    <label asp-for="Name">Product Name</label>
+    <input asp-for="Name" />
+
+    <label asp-for="Quantity">Quantity</label>
+    <input asp-for="Quantity" />
+
+    @*
+    Price could be even missing in form.
+    It is easy to send POST request
+    *@
+    <input type="hidden" asp-for="Price" />
+
+    <button type="submit">Submit</button>
+</form>
+
+<p>Current price: @Model.Price </p>

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VulnerableDeserialization",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRLF", "CRLF\CRLF.csproj", "{B95D3837-2A0B-4423-81D4-5BA1D2A1AC3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathTraversal", "PathTraversal\PathTraversal.csproj", "{03AD8F57-3DAF-4807-B861-BEC6ACF9DA76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathTraversal", "PathTraversal\PathTraversal.csproj", "{03AD8F57-3DAF-4807-B861-BEC6ACF9DA76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterTampering", "ParameterTampering\ParameterTampering.csproj", "{D9F0329E-5CEE-4F5E-80E9-92127AA05873}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{03AD8F57-3DAF-4807-B861-BEC6ACF9DA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03AD8F57-3DAF-4807-B861-BEC6ACF9DA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03AD8F57-3DAF-4807-B861-BEC6ACF9DA76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F0329E-5CEE-4F5E-80E9-92127AA05873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F0329E-5CEE-4F5E-80E9-92127AA05873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F0329E-5CEE-4F5E-80E9-92127AA05873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F0329E-5CEE-4F5E-80E9-92127AA05873}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
