@@ -1,5 +1,3 @@
-using System;
-
 namespace ParameterTampering.Models
 {
     public class ErrorViewModel

@@ -1,5 +1,3 @@
-using System;
-
 namespace CookieJarOverflowSample.Models
 {
     public class ErrorViewModel

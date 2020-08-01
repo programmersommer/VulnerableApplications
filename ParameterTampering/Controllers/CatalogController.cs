@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ParameterTampering.Entities;
+using System.Threading.Tasks;
 
 
 namespace ParameterTampering.Controllers

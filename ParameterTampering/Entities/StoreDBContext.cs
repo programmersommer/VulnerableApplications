@@ -6,8 +6,8 @@ namespace ParameterTampering.Entities
     {
         public DbSet<Article> Articles { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-                                    => options.UseSqlite("Data Source=StoreDB.db");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+                                    => optionsBuilder.UseSqlite("Data Source=StoreDB.db");
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

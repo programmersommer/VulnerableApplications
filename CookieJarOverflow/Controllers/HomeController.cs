@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using CookieJarOverflowSample.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CookieJarOverflowSample.Models;
-using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace CookieJarOverflowSample.Controllers
 {

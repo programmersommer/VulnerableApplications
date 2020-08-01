@@ -1,5 +1,3 @@
-using System;
-
 namespace PRSSISample.Models
 {
     public class ErrorViewModel
