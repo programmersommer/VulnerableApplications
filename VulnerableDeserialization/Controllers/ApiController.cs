@@ -71,7 +71,7 @@ namespace VulnerableDeserialization.Controllers
             // for DoS attack that's enough to let parsing
             settings.DtdProcessing = DtdProcessing.Parse;
             // if you need parsing and want to be protected from DoS use
-            settings.MaxCharactersFromEntities = 1000;
+            settings.MaxCharactersFromEntities = 1000; // by default is 10000000
 
             // That's really very dangerous because allows to get any file content
             settings.XmlResolver = new CustomXmlResolver();
