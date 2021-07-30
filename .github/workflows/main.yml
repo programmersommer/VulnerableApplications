@@ -26,23 +26,9 @@ jobs:
       run: |
         Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile sl.zip
         Expand-Archive -Path sl.zip -DestinationPath .
-    - name: Build console app
-      run: dotnet build netcoreConsole
-    - name: NextGen Static Analysis
-      run: .\sl analyze --app netcoreConsole --tag branch=$Env:GITHUB_REF --csharp --dotnet-core --cpg netcoreConsole/netcoreConsole/netcoreConsole.csproj
-      env:
-        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
-    - name: Build web API
-      run: dotnet build netcoreWebapi
+    - name: Build VulnerableApplications
+      run: dotnet build VulnerableApplications.sln
     - name: Analyze with NG SAST
-      run: .\sl analyze --app netcoreWebapi --tag branch=$Env:GITHUB_REF --csharp --dotnet-core --cpg netcoreWebapi/netcoreWebapi.csproj
-      env:
-        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.0
-    - name: Build netfwWebapi
-      run: msbuild netfwWebapi/netfwWebapi.sln
-    - name: Analyze with NG SAST
-      run: .\sl analyze --app netfwWebapi --tag branch=$Env:GITHUB_REF --csharp --cpg netfwWebapi/netfwWebapi.sln
+      run: .\sl analyze --app VulnerableApplications --tag branch=$Env:GITHUB_REF --csharp --dotnet-core --cpg VulnerableApplications.sln
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
