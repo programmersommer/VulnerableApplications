@@ -13,23 +13,15 @@ namespace VulnerableDeserialization.Controllers
     [Route("[controller]/[action]")]
     public class ApiController : ControllerBase
     {
-
-        /*
-          By default .NET Core is not vulnerable to this attack
-          Works only if options.SerializerSettings.TypeNameHandling = TypeNameHandling.All added to startup.cs
-
-          POST request with this content
-         {
-	        "obj": {
-		    "$type": "System.IO.FileInfo, System.IO.FileSystem",
-		    "fileName": "appsettings.json",
-		    "IsReadOnly": true
-	       }
-         }
-
-         will mark appsettings.json as read-only
-        */
-
+        /// <summary>
+        /// Calling this endpoint will mark appsettings.json as read-only
+        /// </summary>
+        /// <remarks>
+        ///  By default .NET Core is not vulnerable to this attack.
+        ///  Works only if options.SerializerSettings.TypeNameHandling = TypeNameHandling.All added to startup.cs  
+        /// </remarks>
+        /// <param name="param"></param>
+        /// <response code="200">Just returns Ok</response>
         [HttpPost]
         public IActionResult Deserialize([FromBody] SomeDummyObject param)
         {
