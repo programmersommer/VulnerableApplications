@@ -19,6 +19,8 @@ namespace CookieJarOverflowSample.Controllers
         {
             CookieOptions option = new CookieOptions();
             option.HttpOnly = true;
+            // in case if cookie would be set to secure trick with overflow will not work
+            //option.Secure = true;
             Response.Cookies.Append("role", "user", option);
 
             return View();
