@@ -29,12 +29,10 @@ namespace VulnerableDeserialization.Controllers
             return Ok();
         }
 
-        // XXE demo
+
         /*
-          By default .NET Core is not vulnerable to this attack
-        
         <?xml version = "1.0" ?>
-        <!DOCTYPE foo[  < !ELEMENT foo ANY>
+        <!DOCTYPE foo[<!ELEMENT foo ANY>
         <!ENTITY xxe SYSTEM "file:///c:/windows/win.ini" >]>
         <foo>&xxe;</foo>
         */
@@ -50,7 +48,11 @@ namespace VulnerableDeserialization.Controllers
         <data>&a2;</data>
         */
 
+        /// <summary>
+        /// XXE demo. By default .NET Core is not vulnerable to this attack
+        /// </summary>
         [HttpPost]
+        [SwaggerTextBody]
         public async Task<IActionResult> ReadXML()
         {
             var xml = "";
@@ -60,22 +62,26 @@ namespace VulnerableDeserialization.Controllers
             }
 
             XmlReaderSettings settings = new XmlReaderSettings();
-            // for DoS attack that's enough to let parsing
+            // If you have DtdProcessing set to Parse then you can get DoS attack
             settings.DtdProcessing = DtdProcessing.Parse;
-            // if you need parsing and want to be protected from DoS use
-            settings.MaxCharactersFromEntities = 1000; // by default is 10000000
+
+            // If you need parsing and want to be protected from DoS change MaxCharactersFromEntities
+            // by default MaxCharactersFromEntities is set to 10000000 - it's too much
+            //settings.MaxCharactersFromEntities = 1000; 
 
             // That's really very dangerous because allows to get any file content
             settings.XmlResolver = new CustomXmlResolver();
 
             XmlReader reader = XmlReader.Create(new StringReader(xml), settings);
 
+            var result = new StringBuilder();
+
             while (reader.Read())
             {
-                Debug.WriteLine(reader.Value);
+                result.Append(reader.Value);
             }
 
-            return Ok();
+            return Ok(result.ToString());
         }
 
     }
