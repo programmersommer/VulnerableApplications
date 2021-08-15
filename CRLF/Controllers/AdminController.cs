@@ -17,6 +17,14 @@ namespace CRLF.Controllers
         }
 
 
+        /// <summary>
+        /// Just imagine that there is an admin endpoint that is protected with [Authorize]
+        /// </summary>
+        /// <remarks>
+        ///  There is no need to call this action
+        /// </remarks>
+        /// <param name="param"></param>
+        /// <response code="200">Just returns Ok</response>
         [HttpGet]
         public IActionResult SomeSecureAction(string param)
         {
