@@ -14,14 +14,27 @@ namespace PathTraversal.Controllers
             _env = env;
         }
 
-        // Path Traversal example
-        // in case if possible to guess path or get it with Full Path Disclosure vulnerability
-        // https://owasp.org/www-community/attacks/Path_Traversal
-        // https://localhost:44339/api/GetText?name=privacy.txt
-        // https://localhost:44339/api/GetText?name=..//..//appsettings.json
-        // or https://localhost:44339/api/GetText?name=..%2f..%2fappsettings.json
-        // simple solution - do not use param as part of path. send id and get path from database
-        // or sanitize input very carefuly becase of possible tricks (and don't forget to be OS specific)
+        /// <summary>
+        /// Path Traversal example
+        /// </summary>
+        /// <remarks>
+        /// Sometimes it is possible to guess path or get it with Full Path Disclosure vulnerability
+        /// <br /> <br />
+        ///  <a href="https://owasp.org/www-community/attacks/Path_Traversal" target="_blank">OWASP Path Traversal</a>
+        ///  <br /><br /> 
+        ///  <a href="https://localhost:44339/api/GetText?name=privacy.txt" target="_blank">https://localhost:44339/api/GetText?name=privacy.txt</a>
+        /// <br /><br />
+        ///  <a href="https://localhost:44339/api/GetText?name=..//..//appsettings.json" target="_blank">https://localhost:44339/api/GetText?name=..//..//appsettings.json</a>
+        /// <br />
+        ///  <a href="https://localhost:44339/api/GetText?name=..%2f..%2fappsettings.json" target="_blank">https://localhost:44339/api/GetText?name=..%2f..%2fappsettings.json</a>
+        /// <br /> <br />
+        /// Do not use param as part of path. Send id and get path from database
+        /// <br />
+        /// Or sanitize input very carefuly becase of possible tricks (and don't forget to be OS specific)
+        /// </remarks>
+        /// <param name="name"></param>
+        /// <response code="200">Just returns Ok</response>
+        [HttpGet]
         public IActionResult GetText(string name)
         {
             var root = _env.WebRootPath;
