@@ -17,7 +17,8 @@ namespace VulnerableDeserialization.Controllers
         /// Calling this endpoint will mark appsettings.json as read-only
         /// </summary>
         /// <remarks>
-        ///  By default .NET Core is not vulnerable to this attack.
+        ///  By default .NET Core is not vulnerable to this attack.  
+        ///  And it is related to NewtonsoftJson    
         ///  Works only if options.SerializerSettings.TypeNameHandling = TypeNameHandling.All added to startup.cs  
         /// </remarks>
         /// <param name="param"></param>

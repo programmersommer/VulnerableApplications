@@ -30,7 +30,7 @@ namespace PathTraversal.Controllers
         /// <br /> <br />
         /// Do not use param as part of path. Send id and get path from database
         /// <br />
-        /// Or sanitize input very carefuly becase of possible tricks (and don't forget to be OS specific)
+        /// Sanitization is not recommended (because of possible tricks and OS specific functional)
         /// </remarks>
         /// <param name="name"></param>
         /// <response code="200">Just returns Ok</response>

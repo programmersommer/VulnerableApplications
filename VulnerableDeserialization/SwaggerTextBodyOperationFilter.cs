@@ -24,7 +24,7 @@ namespace VulnerableDeserialization
                     },
                     Examples = new Dictionary<string, OpenApiExample>()
                     {
-                        { "DTD Processing",
+                        { "Custom XmlResolver",
                             new OpenApiExample() {
                               Value = new OpenApiString("<?xml version = \"1.0\" ?>" + Environment.NewLine +
                               "<!DOCTYPE foo[<!ELEMENT foo ANY>" + Environment.NewLine +
@@ -32,7 +32,7 @@ namespace VulnerableDeserialization
                               "<foo>&xxe;</foo>")
                             }
                         },
-                         { "DoS",
+                         { "DoS with DTD Processing",
                             new OpenApiExample() {
                               Value = new OpenApiString("<?xml version = \"1.0\" ?>" + Environment.NewLine +
                                     "<!DOCTYPE data[" + Environment.NewLine +
