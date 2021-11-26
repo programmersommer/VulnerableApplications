@@ -21,6 +21,14 @@ namespace ParameterTampering
         {
             services.AddEntityFrameworkSqlite().AddDbContext<StoreDBContext>();
 
+            services.AddAntiforgery(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
+                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+                options.SuppressXFrameOptionsHeader = false;
+            });
+
             services.AddControllersWithViews();
         }
 
