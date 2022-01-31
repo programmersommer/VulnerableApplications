@@ -23,9 +23,9 @@ namespace ParameterTampering
 
             services.AddAntiforgery(options =>
             {
-                options.Cookie.HttpOnly = true;
+                options.Cookie.HttpOnly = true; // is set by default
                 options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
-                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict; // is set by default
                 options.SuppressXFrameOptionsHeader = false;
             });
 

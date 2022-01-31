@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
 
 namespace CRLF.Controllers
 {
@@ -30,8 +31,11 @@ namespace CRLF.Controllers
         [ProducesDefaultResponseType]
         public IActionResult GetOk(string param)
         {
-            //  solution: do a simple sanitization 
-            //  for example: param.Replace(System.Environment.NewLine, "");
+            // solution: validate parameter 
+            //var pattern = @"^[a-zA-Z0-9]+$";
+            //var match = Regex.Match(param, pattern);
+            //if (!match.Success) return BadRequest("Please use only letters and numbers as param value");
+
             _logger.LogInformation(param);
 
             return Ok("Ok");
