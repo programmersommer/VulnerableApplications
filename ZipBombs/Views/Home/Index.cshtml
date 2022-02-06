@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Zip Bombs demo";
+}
+
+<div class="text-center mt-4">
+    <form asp-action="Upload" method="post" enctype="multipart/form-data">
+        <div class="d-flex align-items-center">
+            <input type="file" name="file" required />
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </form>
+</div>
