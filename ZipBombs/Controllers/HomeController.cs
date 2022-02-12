@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using ZipBombs.Models;
 
 namespace ZipBombs.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IHostEnvironment _hostEnvironment;
 
-        public HomeController(ILogger<HomeController> logger, IHostEnvironment hostEnvironment)
+        public HomeController(IHostEnvironment hostEnvironment)
         {
-            _logger = logger;
             _hostEnvironment = hostEnvironment;
         }
 
