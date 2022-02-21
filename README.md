@@ -8,3 +8,5 @@ Some projects with demonstration of vulnerabilities
 [![ShiftLeft](https://github.com/programmersommer/VulnerableApplications/actions/workflows/main.yml/badge.svg)](https://github.com/programmersommer/VulnerableApplications/actions/workflows/main.yml)
 
 [![CodeFactor](https://www.codefactor.io/repository/github/programmersommer/vulnerableapplications/badge)](https://www.codefactor.io/repository/github/programmersommer/vulnerableapplications)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/399f77e2eac642c5ac4a24047715c752)](https://www.codacy.com/gh/programmersommer/VulnerableApplications/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=programmersommer/VulnerableApplications&amp;utm_campaign=Badge_Grade)
