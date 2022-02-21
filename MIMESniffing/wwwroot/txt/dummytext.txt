@@ -1,0 +1,1 @@
+﻿alert('JS alert from text/plain txt file');
