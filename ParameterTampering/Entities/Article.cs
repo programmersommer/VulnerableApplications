@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ParameterTampering.Entities
@@ -10,5 +11,7 @@ namespace ParameterTampering.Entities
         public decimal Price { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
+
+        public List<Comment> Comments { get; } = new List<Comment>();
     }
 }

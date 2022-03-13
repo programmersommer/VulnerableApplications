@@ -1,26 +1,73 @@
 ﻿@using ParameterTampering.Entities
-@model Article
+@using ParameterTampering.ViewModels
+@model HomeViewModel
 
 @{
-    ViewData["Title"] = @Model.Name;
+    ViewData["Title"] = @Model.Article.Name;
 }
 
-<form asp-action="EditArticle" asp-controller="Home">
-    <input type="hidden" asp-for="Id" />
+<div class="container">
+    <form asp-action="EditArticle" asp-controller="Home">
+        <div class="form-group row">
+            <input type="hidden" asp-for="Article.Id" />
 
-    <label asp-for="Name">Product Name</label>
-    <input asp-for="Name" />
+            <div class="col-6">
+                <label asp-for="Article.Name">Product Name</label>
+                <input asp-for="Article.Name" class="form-control" />
+            </div>
 
-    <label asp-for="Quantity">Quantity</label>
-    <input asp-for="Quantity" />
+            <div class="col-6">
+                <label asp-for="Article.Quantity">Quantity</label>
+                <input asp-for="Article.Quantity" class="form-control" />
+            </div>
 
-    @*
-    Price could be even missing in form.
-    It is easy to send POST request
-    *@
-    <input type="hidden" asp-for="Price" />
+            @*
+                Price could be even missing in form.
+                It is easy to send POST request
+            *@
+            <input type="hidden" asp-for="Article.Price" />
 
-    <button type="submit">Submit</button>
-</form>
+            <div class="col-12 mt-2">
+                <p class="m-0">Current price: @Model.Article.Price </p>
+            </div>
 
-<p>Current price: @Model.Price </p>
+            <div class="col-6 mt-2">
+                <button type="submit" class="btn btn-light">Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="form-group row">
+        <div class="col-12">
+            <p>Comments:</p>
+        </div>
+        @foreach (var item in Model.Article.Comments)
+        {
+            <div class="col-12">
+                <div class="border border-info p-2">
+                    <p>@item.Author @item.Created</p>
+                    <p>@item.Message</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <form asp-action="AddComment" asp-controller="Home" method="post" class="mt-2">
+        <div class="form-group row">
+            <input type="hidden" asp-for="NewComment.ArticleId" />
+
+            <div class="col-12">
+                <label asp-for="NewComment.Author">Your name</label>
+                <input asp-for="NewComment.Author" class="form-control" />
+            </div>
+            <div class="col-12">
+                <label asp-for="NewComment.Message">Comment</label>
+                <textarea asp-for="NewComment.Message" class="form-control"></textarea>
+            </div>
+            <div class="col-6 mt-2">
+                <button type="submit" class="btn btn-light">Add comment</button>
+            </div>
+        </div>
+    </form>
+</div>
+

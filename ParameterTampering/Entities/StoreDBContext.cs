@@ -5,6 +5,7 @@ namespace ParameterTampering.Entities
     public class StoreDBContext : DbContext
     {
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                                     => optionsBuilder.UseSqlite("Data Source=StoreDB.db");
@@ -12,6 +13,7 @@ namespace ParameterTampering.Entities
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Article>().ToTable("Articles");
+            builder.Entity<Comment>().ToTable("Comments");
 
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
