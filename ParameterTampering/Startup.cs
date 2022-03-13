@@ -45,8 +45,43 @@ namespace ParameterTampering
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.Headers.Add(
+            //        "Content-Security-Policy",
+            //        "default-src 'self'; " +
+            //        "img-src 'self'; " +
+            //        "font-src 'self'; " +
+            //        "style-src 'self'; " +
+            //        "script-src 'self' 'nonce-S0pIQkVGa3V5YnJneXVic2xiZnlvOEdCT1lVJDNlZA=='; " +
+            //        "frame-src 'self'; " +
+            //        "form-action 'self'; " +
+            //        "frame-ancestors 'none'; " +
+            //        "connect-src 'self';");
+            //    await next();
+            //});
+
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
+            //    context.Response.Headers.Add("X-Frame-Options", "DENY");
+            //    context.Response.Headers.Add("Referrer-Policy", "same-origin");
+            //    await next();
+            //});
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    OnPrepareResponse = (context) =>
+            //    {
+            //        context.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            //    }
+            //});
+
 
             app.UseRouting();
 
