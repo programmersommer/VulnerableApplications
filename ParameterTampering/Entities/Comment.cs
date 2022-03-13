@@ -7,7 +7,9 @@ namespace ParameterTampering.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Message { get; set; }
+        [Required]
         public string Author { get; set; }
         public DateTime Created { get; set; }
         public int ArticleId { get; set; }

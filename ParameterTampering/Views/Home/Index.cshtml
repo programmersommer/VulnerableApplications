@@ -1,9 +1,57 @@
-﻿@using ParameterTampering.Entities
+﻿@using Microsoft.Extensions.Configuration
+@using ParameterTampering.Entities
 @using ParameterTampering.ViewModels
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @model HomeViewModel
+
+@inject IConfiguration Configuration
+@functions {
+    private string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
 
 @{
     ViewData["Title"] = @Model.Article.Name;
+}
+
+@section Scripts {
+<script src="~/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+
+    $('#AddCommentButton').click(function() {
+
+        if (!$("#AddCommentForm").valid()) return;
+
+        $("#AddCommentButton").prop("disabled", true);
+
+        var formData = new FormData(document.forms.AddCommentForm);
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AddComment", "Home")',
+            headers: {
+                "RequestVerificationToken": "@GetAntiXsrfRequestToken()"
+            },
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(result, status, xhr) {
+                $("#CommentsDiv").html(result);
+            },
+            error: function(xhr, status, error) {
+            },
+            complete: function(data) {
+                $("#AddCommentButton").prop("disabled", false);
+                document.forms.AddCommentForm.reset();
+            }
+        });
+    });
+
+</script>
 }
 
 <div class="container">
@@ -37,35 +85,26 @@
         </div>
     </form>
 
-    <div class="form-group row">
-        <div class="col-12">
-            <p>Comments:</p>
-        </div>
-        @foreach (var item in Model.Article.Comments)
-        {
-            <div class="col-12">
-                <div class="border border-info p-2">
-                    <p>@item.Author @item.Created</p>
-                    <p>@item.Message</p>
-                </div>
-            </div>
-        }
+    <div id="CommentsDiv">
+        <partial name="_Comments" />
     </div>
 
-    <form asp-action="AddComment" asp-controller="Home" method="post" class="mt-2">
+    <form asp-action="AddComment" asp-controller="Home" id="AddCommentForm" method="post" class="mt-2">
         <div class="form-group row">
             <input type="hidden" asp-for="NewComment.ArticleId" />
 
             <div class="col-12">
                 <label asp-for="NewComment.Author">Your name</label>
                 <input asp-for="NewComment.Author" class="form-control" />
+                <span asp-validation-for="NewComment.Author" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <label asp-for="NewComment.Message">Comment</label>
                 <textarea asp-for="NewComment.Message" class="form-control"></textarea>
+                <span asp-validation-for="NewComment.Message" class="text-danger"></span>
             </div>
             <div class="col-6 mt-2">
-                <button type="submit" class="btn btn-light">Add comment</button>
+                <input type="button" id="AddCommentButton" class="btn btn-light" value="Add comment" />
             </div>
         </div>
     </form>

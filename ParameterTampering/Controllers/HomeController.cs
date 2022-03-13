@@ -3,6 +3,7 @@ using ParameterTampering.Entities;
 using ParameterTampering.Models;
 using ParameterTampering.ViewModels;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParameterTampering.Controllers
@@ -66,7 +67,13 @@ namespace ParameterTampering.Controllers
             _context.Comments.Add(model.NewComment);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            model.Article = new Article()
+            {
+                Id = model.NewComment.ArticleId,
+                Comments = _context.Comments.Where(c => c.ArticleId == model.NewComment.ArticleId).ToList()
+            };
+
+            return PartialView("_Comments", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

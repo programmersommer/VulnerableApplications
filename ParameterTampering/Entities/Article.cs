@@ -12,6 +12,6 @@ namespace ParameterTampering.Entities
         public string Name { get; set; }
         public int Quantity { get; set; }
 
-        public List<Comment> Comments { get; } = new List<Comment>();
+        public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
