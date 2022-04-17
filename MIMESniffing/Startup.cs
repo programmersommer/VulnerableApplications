@@ -41,7 +41,7 @@ namespace MIMESniffing
                 OnPrepareResponse = (context) =>
                 {
                     // Comment and update page with Ctrl + F5
-                    context.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                    //context.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
                 }
             });
 
