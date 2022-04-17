@@ -63,11 +63,13 @@
             <div class="col-6">
                 <label asp-for="Article.Name">Product Name</label>
                 <input asp-for="Article.Name" class="form-control" />
+                <span asp-validation-for="Article.Name" class="text-danger"></span>
             </div>
 
             <div class="col-6">
                 <label asp-for="Article.Quantity">Quantity</label>
                 <input asp-for="Article.Quantity" class="form-control" />
+                <span asp-validation-for="Article.Quantity" class="text-danger"></span>
             </div>
 
             @*
