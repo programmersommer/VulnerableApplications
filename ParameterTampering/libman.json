@@ -23,6 +23,10 @@
         "jquery.validate.unobtrusive.min.js",
         "jquery.validate.unobtrusive.js"
       ]
+    },
+    {
+      "library": "dompurify@2.3.8",
+      "destination": "wwwroot/dompurify/"
     }
   ]
 }

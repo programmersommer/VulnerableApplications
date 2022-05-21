@@ -17,99 +17,103 @@
 }
 
 @section Scripts {
-<script src="~/jquery-validate/jquery.validate.min.js"></script>
-<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="~/dompurify/purify.min.js"></script>
 
-@* Without nonce="S0pIQkVGa3V5YnJneXVic2xiZnlvOEdCT1lVJDNlZA==" *@
-<script>
+    @* Without nonce="S0pIQkVGa3V5YnJneXVic2xiZnlvOEdCT1lVJDNlZA==" *@
+    <script>
 
-    $('#AddCommentButton').click(function() {
+        $('#AddCommentButton').click(function() {
 
-        if (!$("#AddCommentForm").valid()) return;
+            if (!$("#AddCommentForm").valid()) return;
 
-        $("#AddCommentButton").prop("disabled", true);
+            $("#AddCommentButton").prop("disabled", true);
 
-        var formData = new FormData(document.forms.AddCommentForm);
+            var formData = new FormData(document.forms.AddCommentForm);
 
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("AddComment", "Home")',
-            headers: {
-                "RequestVerificationToken": "@GetAntiXsrfRequestToken()"
-            },
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function(result, status, xhr) {
-                $("#CommentsDiv").html(result);
-            },
-            error: function(xhr, status, error) {
-            },
-            complete: function(data) {
-                $("#AddCommentButton").prop("disabled", false);
-                document.forms.AddCommentForm.reset();
-            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddComment", "Home")',
+                headers: {
+                    "RequestVerificationToken": "@GetAntiXsrfRequestToken()"
+                },
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(result, status, xhr) {
+                    // lets imagine that output might be unencoded
+                    //result = "<img src='x' onerror='alert(`vulnerability!`)'>";
+                    //var clean = DOMPurify.sanitize(result);
+                    $("#CommentsDiv").html(result);
+                },
+                error: function(xhr, status, error) {
+                },
+                complete: function(data) {
+                    $("#AddCommentButton").prop("disabled", false);
+                    document.forms.AddCommentForm.reset();
+                }
+            });
         });
-    });
 
-</script>
+    </script>
 }
 
-<div class="container">
-    <form asp-action="EditArticle" asp-controller="Home">
-        <div class="form-group row">
-            <input type="hidden" asp-for="Article.Id" />
+    <div class="container">
+        <form asp-action="EditArticle" asp-controller="Home">
+            <div class="form-group row">
+                <input type="hidden" asp-for="Article.Id" />
 
-            <div class="col-6">
-                <label asp-for="Article.Name">Product Name</label>
-                <input asp-for="Article.Name" class="form-control" />
-                <span asp-validation-for="Article.Name" class="text-danger"></span>
-            </div>
+                <div class="col-6">
+                    <label asp-for="Article.Name">Product Name</label>
+                    <input asp-for="Article.Name" class="form-control" />
+                    <span asp-validation-for="Article.Name" class="text-danger"></span>
+                </div>
 
-            <div class="col-6">
-                <label asp-for="Article.Quantity">Quantity</label>
-                <input asp-for="Article.Quantity" class="form-control" />
-                <span asp-validation-for="Article.Quantity" class="text-danger"></span>
-            </div>
+                <div class="col-6">
+                    <label asp-for="Article.Quantity">Quantity</label>
+                    <input asp-for="Article.Quantity" class="form-control" />
+                    <span asp-validation-for="Article.Quantity" class="text-danger"></span>
+                </div>
 
-            @*
-                Price could be even missing in form.
-                It is easy to send POST request
+                @*
+            Price could be even missing in form.
+            It is easy to send POST request
             *@
-            <input type="hidden" asp-for="Article.Price" />
+                <input type="hidden" asp-for="Article.Price" />
 
-            <div class="col-12 mt-2">
-                <p class="m-0">Current price: @Model.Article.Price </p>
-            </div>
+                <div class="col-12 mt-2">
+                    <p class="m-0">Current price: @Model.Article.Price </p>
+                </div>
 
-            <div class="col-6 mt-2">
-                <button type="submit" class="btn btn-light">Submit</button>
+                <div class="col-6 mt-2">
+                    <button type="submit" class="btn btn-light">Submit</button>
+                </div>
             </div>
+        </form>
+
+        <div id="CommentsDiv">
+            <partial name="_Comments" />
         </div>
-    </form>
 
-    <div id="CommentsDiv">
-        <partial name="_Comments" />
+        <form asp-action="AddComment" asp-controller="Home" id="AddCommentForm" method="post" class="mt-2">
+            <div class="form-group row">
+                <input type="hidden" asp-for="NewComment.ArticleId" />
+
+                <div class="col-12">
+                    <label asp-for="NewComment.Author">Your name</label>
+                    <input asp-for="NewComment.Author" class="form-control" />
+                    <span asp-validation-for="NewComment.Author" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="NewComment.Message">Comment</label>
+                    <textarea asp-for="NewComment.Message" class="form-control"></textarea>
+                    <span asp-validation-for="NewComment.Message" class="text-danger"></span>
+                </div>
+                <div class="col-6 mt-2">
+                    <input type="button" id="AddCommentButton" class="btn btn-light" value="Add comment" />
+                </div>
+            </div>
+        </form>
     </div>
-
-    <form asp-action="AddComment" asp-controller="Home" id="AddCommentForm" method="post" class="mt-2">
-        <div class="form-group row">
-            <input type="hidden" asp-for="NewComment.ArticleId" />
-
-            <div class="col-12">
-                <label asp-for="NewComment.Author">Your name</label>
-                <input asp-for="NewComment.Author" class="form-control" />
-                <span asp-validation-for="NewComment.Author" class="text-danger"></span>
-            </div>
-            <div class="col-12">
-                <label asp-for="NewComment.Message">Comment</label>
-                <textarea asp-for="NewComment.Message" class="form-control"></textarea>
-                <span asp-validation-for="NewComment.Message" class="text-danger"></span>
-            </div>
-            <div class="col-6 mt-2">
-                <input type="button" id="AddCommentButton" class="btn btn-light" value="Add comment" />
-            </div>
-        </div>
-    </form>
-</div>
 
