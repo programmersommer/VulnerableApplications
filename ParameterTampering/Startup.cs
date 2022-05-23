@@ -74,15 +74,6 @@ namespace ParameterTampering
 
             app.UseStaticFiles();
 
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    OnPrepareResponse = (context) =>
-            //    {
-            //        context.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-            //    }
-            //});
-
-
             app.UseRouting();
 
             app.UseAuthorization();
