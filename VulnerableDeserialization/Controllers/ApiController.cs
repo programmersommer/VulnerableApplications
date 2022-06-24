@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -30,6 +32,40 @@ namespace VulnerableDeserialization.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// StackOverflow exception in case if app using IIS and Newtonsoft.Json lower than 13.0.1
+        /// </summary>
+        [HttpPost]
+        [SwaggerJSON]
+        public async Task<IActionResult> ReadJSON()
+        {
+            var json = "";
+            using (StreamReader streamReader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                json = await streamReader.ReadToEndAsync();
+            }
+
+            //Parse this object (Parsing works well - no exception is being thrown)
+            var parsedJson = JObject.Parse(json);
+
+            using (var ms = new MemoryStream())
+            using (var sWriter = new StreamWriter(ms))
+            using (var jWriter = new JsonTextWriter(sWriter))
+            {
+                //Trying to serialize the object will result in StackOverflowException !!!
+                parsedJson.WriteTo(jWriter);
+            }
+
+            //ToString throws StackOverflowException as well  (ToString is very unefficient - even for smaller payloads, it will occupy a lot of CPU & Memory)
+            //Exception would be thrown even if execute app locally from VS under IIS Express
+            parsedJson.ToString();
+
+            //JsonConvert.SerializeObject throws StackOverflowException as well
+            //string a = JsonConvert.SerializeObject(parsedJson);
+
+            return Ok();
+        }
+
 
         /*
         <?xml version = "1.0" ?>
@@ -53,7 +89,7 @@ namespace VulnerableDeserialization.Controllers
         /// XXE demo. By default .NET Core is not vulnerable to this attack
         /// </summary>
         [HttpPost]
-        [SwaggerTextBody]
+        [SwaggerXML]
         public async Task<IActionResult> ReadXML()
         {
             var xml = "";

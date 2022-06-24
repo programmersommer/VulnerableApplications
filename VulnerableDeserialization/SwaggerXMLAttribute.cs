@@ -2,9 +2,9 @@
 
 namespace VulnerableDeserialization
 {
-    public class SwaggerTextBodyAttribute : Attribute
+    public class SwaggerXMLAttribute : Attribute
     {
-        public SwaggerTextBodyAttribute()
+        public SwaggerXMLAttribute()
         {
             MediaType = "text/plain";
         }

@@ -7,16 +7,16 @@ using System.Linq;
 
 namespace VulnerableDeserialization
 {
-    public class SwaggerTextBodyOperationFilter : IOperationFilter
+    public class SwaggerXMLOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            var swaggerTextBodyAttribute = context.MethodInfo.GetCustomAttributes(true)
-               .SingleOrDefault((attribute) => attribute is SwaggerTextBodyAttribute) as SwaggerTextBodyAttribute;
-            if (swaggerTextBodyAttribute != null)
+            var swaggerXMLAttribute = context.MethodInfo.GetCustomAttributes(true)
+               .SingleOrDefault((attribute) => attribute is SwaggerXMLAttribute) as SwaggerXMLAttribute;
+            if (swaggerXMLAttribute != null)
             {
                 operation.RequestBody = new OpenApiRequestBody();
-                operation.RequestBody.Content.Add(swaggerTextBodyAttribute.MediaType, new OpenApiMediaType()
+                operation.RequestBody.Content.Add(swaggerXMLAttribute.MediaType, new OpenApiMediaType()
                 {
                     Schema = new OpenApiSchema()
                     {
