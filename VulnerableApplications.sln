@@ -17,7 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParameterTampering", "Param
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZipBombs", "ZipBombs\ZipBombs.csproj", "{B97B04D8-E20F-45D4-9430-FC78380FC7A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIMESniffing", "MIMESniffing\MIMESniffing.csproj", "{936164C5-8625-4665-81F1-46F8DD498039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MIMESniffing", "MIMESniffing\MIMESniffing.csproj", "{936164C5-8625-4665-81F1-46F8DD498039}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimingAttack", "TimingAttack\TimingAttack.csproj", "{FD333524-2810-4A05-8F5F-5F3B91F26A41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C6334F9F-053F-4EC7-90D7-DD16E2A454AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{936164C5-8625-4665-81F1-46F8DD498039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{936164C5-8625-4665-81F1-46F8DD498039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{936164C5-8625-4665-81F1-46F8DD498039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD333524-2810-4A05-8F5F-5F3B91F26A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD333524-2810-4A05-8F5F-5F3B91F26A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD333524-2810-4A05-8F5F-5F3B91F26A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD333524-2810-4A05-8F5F-5F3B91F26A41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
