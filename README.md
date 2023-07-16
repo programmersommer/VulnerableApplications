@@ -1,6 +1,8 @@
 # VulnerableApplications
 Some projects with a demonstration of vulnerabilities
 
+[![CodeQL](https://github.com/programmersommer/VulnerableApplications/actions/workflows/codeql.yml/badge.svg)](https://github.com/programmersommer/VulnerableApplications/actions/workflows/codeql.yml)
+
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=programmersommer_VulnerableApplications&metric=bugs)](https://sonarcloud.io/dashboard?id=programmersommer_VulnerableApplications) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=programmersommer_VulnerableApplications&metric=security_rating)](https://sonarcloud.io/dashboard?id=programmersommer_VulnerableApplications) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=programmersommer_VulnerableApplications&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=programmersommer_VulnerableApplications)
 
 [![ShiftLeft](https://github.com/programmersommer/VulnerableApplications/actions/workflows/main.yml/badge.svg)](https://github.com/programmersommer/VulnerableApplications/actions/workflows/main.yml)
