@@ -1,0 +1,19 @@
+﻿@using WorkshopApp.ViewModels
+@using System.Text.Encodings.Web
+
+@model HomeViewModel
+
+<div class="form-group row">
+    <div class="col-12">
+        <p>Comments:</p>
+    </div>
+    @foreach (var item in Model.Article.Comments)
+    {
+        <div class="col-12">
+            <div class="border border-info p-2">
+                <p>@item.Author @item.Created</p>
+                <p>@item.Message</p>
+            </div>
+        </div>
+    }
+</div>
