@@ -40,7 +40,7 @@ namespace ParameterTampering.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditArticle(/*[Bind("Id", "Name", "Quantity")]*/ Article article)
+        public async Task<IActionResult> EditArticle(Article article)
         {
             // Never trust to parameters
             //var existingArticle = _context.Articles.FirstOrDefault(a => a.Id == article.Id);
@@ -51,6 +51,8 @@ namespace ParameterTampering.Controllers
             //    _context.Articles.Update(existingArticle);
             //    await _context.SaveChangesAsync();
             //}
+            // PS: Better yet to use DTO classes to prevent database schema disclosure (Exposure of Sensitive System Information)
+           
 
             _context.Articles.Update(article);
             await _context.SaveChangesAsync();
