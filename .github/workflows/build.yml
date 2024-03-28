@@ -22,6 +22,22 @@ jobs:
           # Shallow clones should be disabled for a better relevancy of analysis
           fetch-depth: 0
 
+      # Speed-up analysis by caching the scanner workspace
+      - name: Cache SonarCloud workspace
+        uses: actions/cache@v1
+        with:
+          path: ~\.sonar\cache
+          key: ${{ runner.os }}-sonar-cache
+          restore-keys: ${{ runner.os }}-sonar-cache
+
+      # Speed-up analysis by caching the scanner installation
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
 
       - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
@@ -29,7 +45,7 @@ jobs:
         # The --version argument is optional. If it is omitted the latest version will be installed.
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner --version 4.8.0
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner --version 6.2.0
 
       - name: Build and analyze
         env:
