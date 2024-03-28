@@ -52,7 +52,7 @@ namespace ParameterTampering.Controllers
             //    await _context.SaveChangesAsync();
             //}
             // PS: Better yet to use DTO classes to prevent database schema disclosure (Exposure of Sensitive System Information)
-           
+
 
             _context.Articles.Update(article);
             await _context.SaveChangesAsync();
