@@ -9,7 +9,7 @@ Some projects with a demonstration of vulnerabilities
 
 [![CodeFactor](https://www.codefactor.io/repository/github/programmersommer/vulnerableapplications/badge)](https://www.codefactor.io/repository/github/programmersommer/vulnerableapplications)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/399f77e2eac642c5ac4a24047715c752)](https://www.codacy.com/gh/programmersommer/VulnerableApplications/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=programmersommer/VulnerableApplications&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/399f77e2eac642c5ac4a24047715c752)](https://app.codacy.com/gh/programmersommer/VulnerableApplications/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 **CookieJarOverflow** - backend side creates a cookie with HttpOnly flag, that means that cookie cannot be accessed through client side script. But after clicking on button JS script creates hundreds of "dummy" cookies and changes the content of the cookie
 
