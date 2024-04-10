@@ -21,7 +21,7 @@ namespace CRLF.Controllers
         /// <remarks>
         ///  <a href="https://owasp.org/www-community/vulnerabilities/CRLF_Injection" target="_blank">OWASP CRLF</a>
         ///  <br /><br /> 
-        ///  <a href="https://localhost:44340/api/getok?param=123%0d%0aCRLF.Controllers.AdminController:%20Information:%20555" target="_blank">https://localhost:44340/api/getok?param=123%0d%0aCRLF.Controllers.AdminController:%20Information:%20555</a>
+        ///  <a href="https://localhost:44340/api/getok?param=123%0d%0aCRLF.Controllers.AdminController[0]%0d%0a555" target="_blank">https://localhost:44340/api/getok?param=123%0d%0aCRLF.Controllers.AdminController:%20Information:%20555</a>
         /// </remarks>
         /// <param name="param"></param>
         /// <response code="200">Just returns Ok</response>
