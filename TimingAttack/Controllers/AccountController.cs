@@ -42,7 +42,7 @@ namespace TimingAttack.Controllers
         [HttpGet]
         public async void AddUser()
         {
-            var user = new IdentityUser { UserName = "sommer", Email = "sommerprogrammer@gmail.com" };
+            var user = new IdentityUser { UserName = "johndoe", Email = "johndoe@gmail.com" };
             var result = await _userManager.CreateAsync(user, "!QAZ2wsx");
         }
 
