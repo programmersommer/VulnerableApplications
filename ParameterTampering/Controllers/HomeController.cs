@@ -43,6 +43,7 @@ namespace ParameterTampering.Controllers
         public async Task<IActionResult> EditArticle(Article article)
         {
             // Never trust to parameters
+            // And better use DTO class to prevent database schema disclosure (Exposure of Sensitive System Information)
             //var existingArticle = _context.Articles.FirstOrDefault(a => a.Id == article.Id);
             //if (existingArticle != default)
             //{
@@ -51,8 +52,6 @@ namespace ParameterTampering.Controllers
             //    _context.Articles.Update(existingArticle);
             //    await _context.SaveChangesAsync();
             //}
-            // PS: Better yet to use DTO classes to prevent database schema disclosure (Exposure of Sensitive System Information)
-
 
             _context.Articles.Update(article);
             await _context.SaveChangesAsync();
