@@ -43,7 +43,8 @@ namespace ParameterTampering.Controllers
         public async Task<IActionResult> EditArticle(Article article)
         {
             // Never trust to parameters
-            // And better use DTO class to prevent database schema disclosure (Exposure of Sensitive System Information)
+            // And better use DTO class (Dto.ArticleDto) to prevent database schema disclosure (Exposure of Sensitive System Information)
+
             //var existingArticle = _context.Articles.FirstOrDefault(a => a.Id == article.Id);
             //if (existingArticle != default)
             //{

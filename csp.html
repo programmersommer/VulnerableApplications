@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>CSP example</title>
+
+<meta http-equiv="content-security-policy"  content="
+	script-src 'self' 'nonce-ZWhkS0drNGxpa3M7eGh3MGtlO3Rbd2tzaHdpM21mO0o=';
+	style-src 'self';
+">
+
+</head>
+<body>
+
+<input type="button" id="btn1" value="Button 1 (Inline JS)" onclick="alert('Button 1 clicked')">
+
+<input type="button" id="btn2" value="Button 2 (Script tag JS)">
+
+<input type="button" id="btn3" value="Button 3 (JS file)">
+
+<script nonce="ZWhkS0drNGxpa3M7eGh3MGtlO3Rbd2tzaHdpM21mO0o=">
+document.getElementById("btn2").onclick = function(e){
+    alert('Button 2 clicked');
+}
+</script>
+
+<script src="csp-script.js"></script>
+
+</body>
+</html>

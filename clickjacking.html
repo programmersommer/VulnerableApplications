@@ -1,6 +1,10 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 
-<body>
+<head>
+
+<title>Clickjacking example</title>
+
 <style>
 
 html { -ms-overflow-style: none; 
@@ -24,29 +28,13 @@ iframe {
   z-index: 1;
 }
 </style>
+</head>
+
+<body>
 
 <input type="button" id="clickjacking-button" onclick="alert('I have done something on your behalf')">
-
 
 <iframe class="your-website-frame" src="https://en.wikipedia.org/wiki/Wikipedia"></iframe>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

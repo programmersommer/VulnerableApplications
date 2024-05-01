@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ParameterTampering.DTO
+namespace ParameterTampering.Dto
 {
     public class ArticleDto
     {
