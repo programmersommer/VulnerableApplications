@@ -39,7 +39,6 @@ namespace ParameterTampering.Controllers
         // https://localhost:44335/catalog/EditArticle?Id=1&Quantity=100&Price=1.00&Name=Lego
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditArticle(Article article)
         {
             // Never trust to parameters
@@ -61,7 +60,6 @@ namespace ParameterTampering.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddComment(HomeViewModel model)
         {
             model.NewComment.Created = System.DateTime.Now;
