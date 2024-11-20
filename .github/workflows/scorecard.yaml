@@ -15,3 +15,7 @@ jobs:
    steps:
     - name: OSSF Scorecard action
       uses: ossf/scorecard-action@v2.4.0
+      with:
+        results_file: results.sarif
+        results_format: sarif
+        publish_results: true
