@@ -1,0 +1,17 @@
+# This workflow integrates OSSF ScoreCard
+name: ScoreCard
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  scan:
+   runs-on: windows-latest
+  
+   steps:
+    - name: OSSF Scorecard action
+      uses: ossf/scorecard-action@v2.4.0
