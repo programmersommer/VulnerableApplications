@@ -11,6 +11,8 @@ Some projects with a demonstration of vulnerabilities
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/399f77e2eac642c5ac4a24047715c752)](https://app.codacy.com/gh/programmersommer/VulnerableApplications/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/programmersommer/VulnerableApplications/badge)](https://scorecard.dev/viewer/?uri=github.com/programmersommer/VulnerableApplications)
+
 **CookieJarOverflow** - backend side creates a cookie with HttpOnly flag, that means that cookie cannot be accessed through client side script. But after clicking on button JS script creates hundreds of "dummy" cookies and changes the content of the cookie
 
 
