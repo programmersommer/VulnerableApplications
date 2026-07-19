@@ -38,6 +38,11 @@
             });
         });
 
+        $('#PreviewButton').click(function() {
+            var comment = $("#NewComment_Message").val();
+            $("#PreviewDiv").html(comment);
+        });
+
     </script>
 }
 
@@ -89,8 +94,15 @@
                 <div class="col-6 mt-2">
                     <input type="button" id="AddCommentButton" class="btn btn-light" value="Add comment" />
                 </div>
+                <div class="col-6 mt-2">
+                    <input type="button" id="PreviewButton" class="btn btn-light" value="Preview" />
+                </div>
             </div>
         </form>
+
+        <div id="PreviewDiv">
+          
+        </div>
 
         <div class="form-group row">
             <div class="col-12 col-md-4 col-xl-3">
