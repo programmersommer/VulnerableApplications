@@ -5,8 +5,6 @@ Some projects with a demonstration of vulnerabilities
 
 [![Security issues](https://sonarcloud.io/api/project_badges/measure?project=programmersommer_VulnerableApplications&metric=software_quality_security_issues)](https://sonarcloud.io/summary/new_code?id=programmersommer_VulnerableApplications)
 
-[![ShiftLeft](https://github.com/programmersommer/VulnerableApplications/actions/workflows/ShiftLeft.yml/badge.svg)](https://github.com/programmersommer/VulnerableApplications/actions/workflows/ShiftLeft.yml)
-
 [![CodeFactor](https://www.codefactor.io/repository/github/programmersommer/vulnerableapplications/badge)](https://www.codefactor.io/repository/github/programmersommer/vulnerableapplications)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/399f77e2eac642c5ac4a24047715c752)](https://app.codacy.com/gh/programmersommer/VulnerableApplications/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
