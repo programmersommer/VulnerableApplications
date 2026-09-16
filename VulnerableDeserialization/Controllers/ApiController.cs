@@ -32,8 +32,11 @@ namespace VulnerableDeserialization.Controllers
         }
 
         /// <summary>
-        /// StackOverflow exception in case if app using IIS and Newtonsoft.Json lower than 13.0.1
+        /// Calling this endpoint might result in StackOverflow exception
         /// </summary>
+        /// <remarks>
+        ///  StackOverflow exception in case if app using IIS and Newtonsoft.Json lower than 13.0.1 
+        /// </remarks>
         [HttpPost]
         [SwaggerJSON]
         public async Task<IActionResult> ReadJSON()
@@ -85,8 +88,19 @@ namespace VulnerableDeserialization.Controllers
         */
 
         /// <summary>
-        /// XXE demo. By default .NET Core is not vulnerable to this attack
+        /// XXE demo
         /// </summary>
+        /// <remarks>
+        ///  By default .NET Core is not vulnerable to this attack
+        ///  But if you using XmlReaderSettings settings = new XmlReaderSettings();
+        ///  Then your app could be vulnerable to next attacks:
+        ///  1. Custom XMLResolver:
+        ///  Any file could be accessed in case if you using:
+        ///  settings.XmlResolver = new CustomXmlResolver();
+        ///  2. DoS with DTD Processing
+        ///  If you have DtdProcessing set to Parse then you can get DoS attack:
+        ///  settings.DtdProcessing = DtdProcessing.Parse;
+        /// </remarks>
         [HttpPost]
         [SwaggerXML]
         public async Task<IActionResult> ReadXML()
