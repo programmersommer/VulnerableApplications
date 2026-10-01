@@ -78,8 +78,12 @@ namespace TimingAttack.Controllers
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["code"] = code;
 
-            var uriBuilder = new UriBuilder("https", _configuration["ResetPasswordUrl"], -1, null);
-            uriBuilder.Query = query.ToString();
+            // vulnerable to Host Header Attacks
+            var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port.Value, null)
+            {
+                Query = query.ToString()
+            };
+
             var callbackUrl = uriBuilder.ToString();
 
             await _emailSender.SendEmailAsync(email, "Reset Password",
