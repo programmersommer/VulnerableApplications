@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TimingAttack.Data.Entities
+﻿namespace TimingAttack.Data.Entities
 {
     public class BankAccount
     {
-        [Key]
+        public int Id { get; set; }
         public string AccountNumber { get; set; }
         public decimal Balance { get; set; }
+
+        //public byte[] RowVersion { get; set; } = null!; // race condition / TOCTOU mitigation
     }
 }
