@@ -130,5 +130,32 @@ namespace TimingAttack.Controllers
                 throw new InvalidOperationException($"Account '{number}' could not be created (it may already exist).", ex);
             }
         }
+
+        /// <summary>
+        /// This endpoint is used for race condition / TOCTOU attack demonstration
+        /// </summary>
+        /// <param name="accountNumber">Bank account number</param>   
+        /// <param name="amount">Amount to be withdrawn</param>
+        /// <response code="200">Just returns Ok</response>
+        /// <response code="400">Not enough money in the account</response>
+        [HttpPost]
+        public async Task<IActionResult> Withdraw(string accountNumber, decimal amount)
+        {
+            var account = await _context.BankAccounts
+                .FirstAsync(a => a.AccountNumber == accountNumber);
+
+            if (account.Balance < amount)
+                return BadRequest("Insufficient money in the account");
+
+            // Simulate some processing, for example does User eligable to withdraw money (e.g. check if account is blocked, etc.)
+            await Task.Delay(3000);
+
+            account.Balance -= amount;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }
