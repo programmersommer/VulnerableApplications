@@ -9,7 +9,7 @@ using Microsoft.OpenApi;
 using System;
 using System.IO;
 using System.Reflection;
-using TimingAttack.Entities;
+using TimingAttack.Data;
 using TimingAttack.Services;
 
 namespace TimingAttack

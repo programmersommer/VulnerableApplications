@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TimingAttack.Data.Entities;
 
 
-namespace TimingAttack.Entities
+namespace TimingAttack.Data
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class DemoDBContext : IdentityDbContext
     {
+        public DbSet<BankAccount> BankAccounts { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
                                   => options.UseSqlite("Data Source=DemoDB.db");
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
