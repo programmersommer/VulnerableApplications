@@ -142,6 +142,9 @@ namespace TimingAttack.Controllers
         [HttpPost]
         public async Task<IActionResult> Charge(string accountNumber, decimal amount)
         {
+            // could be mitigation for SQLite. For else Databases you can consider RowVersion
+            //await using var transaction = await _context.Database.BeginTransactionAsync();
+
             var account = await _context.BankAccounts
                 .FirstAsync(a => a.AccountNumber == accountNumber);
 
@@ -154,6 +157,7 @@ namespace TimingAttack.Controllers
             account.Balance -= amount;
 
             await _context.SaveChangesAsync();
+            //await transaction.CommitAsync();
 
             return Ok();
         }
