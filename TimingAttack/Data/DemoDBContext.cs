@@ -11,5 +11,12 @@ namespace TimingAttack.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
                                   => options.UseSqlite("Data Source=DemoDB.db");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(
+                typeof(DemoDBContext).Assembly);
+        }
     }
 }

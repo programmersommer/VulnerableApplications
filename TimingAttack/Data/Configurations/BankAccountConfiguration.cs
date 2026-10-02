@@ -9,10 +9,10 @@ namespace TimingAttack.Data.Configurations
         public void Configure(EntityTypeBuilder<BankAccount> b)
         {
             b.HasKey(x => x.Id);
-            b.Property(x => x.AccountNumber).IsRequired().HasMaxLength(10);
+            b.Property(x => x.AccountNumber).IsRequired();
             b.HasIndex(x => x.AccountNumber).IsUnique();
             b.Property(x => x.Balance).HasPrecision(14, 2);
-            //b.Property(x => x.RowVersion).IsRowVersion(); // race condition / TOCTOU mitigation
+            //b.Property(x => x.RowVersion).IsRowVersion(); // race condition / TOCTOU mitigation, but it doesn't work for SQLite
         }
     }
 }
