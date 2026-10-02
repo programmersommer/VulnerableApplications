@@ -132,14 +132,15 @@ namespace TimingAttack.Controllers
         }
 
         /// <summary>
-        /// This endpoint is used for race condition / TOCTOU attack demonstration
+        /// This endpoint is used for race condition / TOCTOU attack demonstration. 
+        /// If send 2 or more requests in parallel, it would be possible to withdraw more money than available on the account.
         /// </summary>
         /// <param name="accountNumber">Bank account number</param>   
-        /// <param name="amount">Amount to be withdrawn</param>
+        /// <param name="amount">Amount to be withdrawn from account for some payment</param>
         /// <response code="200">Just returns Ok</response>
         /// <response code="400">Not enough money in the account</response>
         [HttpPost]
-        public async Task<IActionResult> Withdraw(string accountNumber, decimal amount)
+        public async Task<IActionResult> Charge(string accountNumber, decimal amount)
         {
             var account = await _context.BankAccounts
                 .FirstAsync(a => a.AccountNumber == accountNumber);
@@ -148,7 +149,7 @@ namespace TimingAttack.Controllers
                 return BadRequest("Insufficient money in the account");
 
             // Simulate some processing, for example does User eligable to withdraw money (e.g. check if account is blocked, etc.)
-            await Task.Delay(3000);
+            await Task.Delay(5000);
 
             account.Balance -= amount;
 
