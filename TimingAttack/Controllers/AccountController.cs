@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -13,8 +12,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using TimingAttack.Data;
-using TimingAttack.Data.Entities;
 
 namespace TimingAttack.Controllers
 {
@@ -26,18 +23,16 @@ namespace TimingAttack.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly DemoDBContext _context;
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public AccountController(UserManager<IdentityUser> userManager, DemoDBContext context,
+        public AccountController(UserManager<IdentityUser> userManager,
             IEmailSender emailSender, IConfiguration configuration)
         {
             _userManager = userManager;
-            _context = context;
             _emailSender = emailSender;
             _configuration = configuration;
         }
@@ -59,39 +54,6 @@ namespace TimingAttack.Controllers
             var user = new IdentityUser { UserName = name, Email = email };
             var result = await _userManager.CreateAsync(user, password);
             return result.Succeeded ? Ok() : BadRequest(result.Errors);
-        }
-
-        /// <summary>
-        /// Authenticates a user and issues a JWT access token.
-        /// </summary>
-        /// <param name="req">The login credentials (email and password).</param>
-        /// <returns>A JWT access token to send as a <c>Bearer</c> token in the <c>Authorization</c> header.</returns>
-        /// <response code="200">Authentication succeeded. The response body is the access token.</response>
-        /// <response code="401">The email or password is incorrect.</response>
-        [HttpPost]
-        [ProducesResponseType<string>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> Login(LoginRequest req)
-        {
-            var email = req.Email.Trim().ToLowerInvariant();
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user is null ||
-                _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, req.Password) == PasswordVerificationResult.Failed)
-                return Unauthorized();
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-
-            var token = new JsonWebTokenHandler().CreateToken(new SecurityTokenDescriptor
-            {
-                Issuer = _configuration["Jwt:Issuer"],
-                Audience = _configuration["Jwt:Audience"],
-                Expires = DateTime.UtcNow.AddMinutes(30),
-                Claims = new Dictionary<string, object> { ["sub"] = user.Id.ToString(), ["email"] = user.Email },
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
-            });
-
-            return token;
         }
 
         /// <summary>
@@ -142,65 +104,37 @@ namespace TimingAttack.Controllers
 
 
         /// <summary>
-        /// Use this endpoint to create new Bank Account
+        /// Authenticates a user and issues a JWT access token.
         /// </summary>
-        /// <remarks>
-        ///  Would be used in future for race condition / TOCTOU attack demonstration
-        /// </remarks>
-        /// <param name="number">Bank account number</param>   
-        /// <param name="balance">Current balance</param>
-        /// <response code="200">Just returns Ok</response>
-        /// <response code="500">Unexpected server error.</response>
-        [HttpPost]
-        public async Task<string> AddBankAccount(string number, decimal balance)
-        {
-            var bankAccount = new BankAccount { AccountNumber = number, Balance = balance };
-
-            try
-            {
-                _context.BankAccounts.Add(bankAccount);
-                await _context.SaveChangesAsync();
-                return bankAccount.AccountNumber;
-            }
-            catch (DbUpdateException ex)
-            {
-                // bad practice is to return information about real exception
-                throw new InvalidOperationException($"Account '{number}' could not be created (it may already exist).", ex);
-            }
-        }
-
-        /// <summary>
-        /// This endpoint is used for race condition / TOCTOU attack demonstration. 
-        /// If send 2 or more requests in parallel, it would be possible to withdraw more money than available on the account.
-        /// </summary>
-        /// <param name="accountNumber">Bank account number</param>   
-        /// <param name="amount">Amount to be withdrawn from account for some payment</param>
-        /// <response code="200">Just returns Ok</response>
-        /// <response code="400">Not enough money in the account</response>
+        /// <param name="req">The login credentials (email and password).</param>
+        /// <returns>A JWT access token to send as a <c>Bearer</c> token in the <c>Authorization</c> header.</returns>
+        /// <response code="200">Authentication succeeded. The response body is the access token.</response>
+        /// <response code="401">The email or password is incorrect.</response>
         [HttpPost]
         [ProducesResponseType<string>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Charge(string accountNumber, decimal amount)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ApiExplorerSettings(IgnoreApi = true)] // as there are no related demo for this endpoint, it is hidden from Swagger UI
+        public async Task<ActionResult<string>> Login(LoginRequest req)
         {
-            // could be mitigation for SQLite. For else Databases you can consider RowVersion
-            //await using var transaction = await _context.Database.BeginTransactionAsync();
+            var email = req.Email.Trim().ToLowerInvariant();
+            var user = await _userManager.FindByEmailAsync(email);
 
-            var account = await _context.BankAccounts
-                .FirstAsync(a => a.AccountNumber == accountNumber);
+            if (user is null ||
+                _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, req.Password) == PasswordVerificationResult.Failed)
+                return Unauthorized();
 
-            if (account.Balance < amount)
-                return BadRequest("Insufficient money in the account");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
 
-            // Simulate some processing, for example does User eligable to withdraw money (e.g. check if account is blocked, etc.)
-            await Task.Delay(5000);
+            var token = new JsonWebTokenHandler().CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"],
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                Claims = new Dictionary<string, object> { ["sub"] = user.Id.ToString(), ["email"] = user.Email },
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            });
 
-            account.Balance -= amount;
-
-            await _context.SaveChangesAsync();
-            //await transaction.CommitAsync();
-
-            return Ok();
+            return token;
         }
-
     }
 }
