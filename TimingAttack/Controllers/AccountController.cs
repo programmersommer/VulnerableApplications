@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -43,9 +48,9 @@ namespace TimingAttack.Controllers
         /// <remarks>
         ///  There are no remarks
         /// </remarks>
-        /// <parameter name="name">The username</parameter>
-        /// <parameter name="email">The email address</parameter>
-        /// <parameter name="password">The password</parameter>
+        /// <param name="name">The username</param>
+        /// <param name="email">The email address</param>
+        /// <param name="password">The password</param>
         /// <response code="200">Just returns Ok</response>
         /// <response code="400">Request is invalid (e.g. unsafe password).</response>
         [HttpPost]
@@ -54,6 +59,39 @@ namespace TimingAttack.Controllers
             var user = new IdentityUser { UserName = name, Email = email };
             var result = await _userManager.CreateAsync(user, password);
             return result.Succeeded ? Ok() : BadRequest(result.Errors);
+        }
+
+        /// <summary>
+        /// Authenticates a user and issues a JWT access token.
+        /// </summary>
+        /// <param name="req">The login credentials (email and password).</param>
+        /// <returns>A JWT access token to send as a <c>Bearer</c> token in the <c>Authorization</c> header.</returns>
+        /// <response code="200">Authentication succeeded. The response body is the access token.</response>
+        /// <response code="401">The email or password is incorrect.</response>
+        [HttpPost]
+        [ProducesResponseType<string>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> Login(LoginRequest req)
+        {
+            var email = req.Email.Trim().ToLowerInvariant();
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null ||
+                _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, req.Password) == PasswordVerificationResult.Failed)
+                return Unauthorized();
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+
+            var token = new JsonWebTokenHandler().CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"],
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                Claims = new Dictionary<string, object> { ["sub"] = user.Id.ToString(), ["email"] = user.Email },
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            });
+
+            return token;
         }
 
         /// <summary>
@@ -117,12 +155,12 @@ namespace TimingAttack.Controllers
         public async Task<string> AddBankAccount(string number, decimal balance)
         {
             var bankAccount = new BankAccount { AccountNumber = number, Balance = balance };
-            
+
             try
             {
                 _context.BankAccounts.Add(bankAccount);
                 await _context.SaveChangesAsync();
-                return bankAccount.AccountNumber; 
+                return bankAccount.AccountNumber;
             }
             catch (DbUpdateException ex)
             {
@@ -140,6 +178,8 @@ namespace TimingAttack.Controllers
         /// <response code="200">Just returns Ok</response>
         /// <response code="400">Not enough money in the account</response>
         [HttpPost]
+        [ProducesResponseType<string>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Charge(string accountNumber, decimal amount)
         {
             // could be mitigation for SQLite. For else Databases you can consider RowVersion
