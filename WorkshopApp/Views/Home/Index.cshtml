@@ -1,5 +1,4 @@
-﻿@using WorkshopApp.Entities
-@using WorkshopApp.ViewModels
+﻿@using WorkshopApp.ViewModels
 @model HomeViewModel
 
 @{
@@ -38,7 +37,7 @@
             });
         });
 
-        $('#PreviewButton').click(function() {
+        $('#PreviewButton').click(function () {
             var comment = $("#NewComment_Message").val();
             $("#PreviewDiv").html(comment);
         });
@@ -46,70 +45,68 @@
     </script>
 }
 
-    <div class="container">
-        <form asp-action="EditArticle" asp-controller="Home">
-            <div class="form-group row">
-                <input type="hidden" asp-for="Article.Id" />
-
-                <div class="col-6">
-                    <label asp-for="Article.Name">Product Name</label>
-                    <input asp-for="Article.Name" class="form-control" />
-                </div>
-
-                <div class="col-6">
-                    <label asp-for="Article.Quantity">Quantity</label>
-                    <input asp-for="Article.Quantity" class="form-control" />
-                </div>
-
-                <input type="hidden" asp-for="Article.Price" />
-
-                <div class="col-12 mt-2">
-                    <p class="m-0">Current price: @Model.Article.Price </p>
-                </div>
-
-                <div class="col-6 mt-2">
-                    <button type="submit" class="btn btn-light">Submit</button>
-                </div>
-            </div>
-        </form>
-
-        <div id="CommentsDiv">
-            <partial name="_Comments" />
-        </div>
-
-        <form asp-action="AddComment" asp-controller="Home" id="AddCommentForm" method="post" class="mt-2">
-            <div class="form-group row">
-                <input type="hidden" asp-for="NewComment.ArticleId" />
-
-                <div class="col-12">
-                    <label asp-for="NewComment.Author">Your name</label>
-                    <input asp-for="NewComment.Author" class="form-control" />
-                    <span asp-validation-for="NewComment.Author" class="text-danger"></span>
-                </div>
-                <div class="col-12">
-                    <label asp-for="NewComment.Message">Comment</label>
-                    <textarea asp-for="NewComment.Message" class="form-control"></textarea>
-                    <span asp-validation-for="NewComment.Message" class="text-danger"></span>
-                </div>
-                <div class="col-6 mt-2">
-                    <input type="button" id="AddCommentButton" class="btn btn-light" value="Add comment" />
-                </div>
-                <div class="col-6 mt-2">
-                    <input type="button" id="PreviewButton" class="btn btn-light" value="Preview" />
-                </div>
-            </div>
-        </form>
-
-        <div id="PreviewDiv">
-          
-        </div>
-
+<div class="container">
+    <form asp-action="EditArticle" asp-controller="Home">
         <div class="form-group row">
-            <div class="col-12 col-md-4 col-xl-3">
-            <img src="https://www.drk.de/_assets/0a0d97cd07e035b6bf4572878accaf10/Images/logo-drk.svg" class="img-fluid" />
-                <a href="https://owasp.org">OWASP - Read more about security</a>
+
+            <div class="col-12">
+                <img src="images/Lego.webp" alt="Lego" style="max-height: 200px;" />
+            </div>
+
+            <input type="hidden" asp-for="Article.Id" />
+
+            <div class="col-6">
+                <label asp-for="Article.Name">Product Name</label>
+                <input asp-for="Article.Name" class="form-control" />
+            </div>
+
+            <div class="col-6">
+                <label asp-for="Article.Quantity">Quantity</label>
+                <input asp-for="Article.Quantity" class="form-control" />
+            </div>
+
+            <input type="hidden" asp-for="Article.Price" />
+
+            <div class="col-12 mt-2">
+                <p class="m-0">Current price: @Model.Article.Price </p>
+            </div>
+
+            <div class="col-6 mt-2">
+                <button type="submit" class="btn btn-light">Submit</button>
             </div>
         </div>
+    </form>
 
+
+    <div id="CommentsDiv" class="mt-5">
+        <partial name="_Comments" />
     </div>
+
+    <form asp-action="AddComment" asp-controller="Home" id="AddCommentForm" method="post" class="mt-2">
+        <div class="form-group row">
+            <input type="hidden" asp-for="NewComment.ArticleId" />
+
+            <div class="col-12">
+                <label asp-for="NewComment.Author">Your name</label>
+                <input asp-for="NewComment.Author" class="form-control" />
+                <span asp-validation-for="NewComment.Author" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="NewComment.Message">Comment</label>
+                <textarea asp-for="NewComment.Message" class="form-control"></textarea>
+                <span asp-validation-for="NewComment.Message" class="text-danger"></span>
+            </div>
+            <div class="col-6 mt-2">
+                <input type="button" id="AddCommentButton" class="btn btn-light" value="Add comment" />
+            </div>
+            <div class="col-6 mt-2">
+                <input type="button" id="PreviewButton" class="btn btn-light" value="Preview" />
+            </div>
+        </div>
+    </form>
+
+    <div id="PreviewDiv">
+    </div>
+
+</div>
 
