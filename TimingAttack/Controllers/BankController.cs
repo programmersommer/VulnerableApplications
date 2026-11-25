@@ -77,7 +77,7 @@ namespace TimingAttack.Controllers
                 .FirstAsync(a => a.AccountNumber == accountNumber);
 
             if (account.Balance < amount)
-                return BadRequest("Insufficient money in the account");
+                return BadRequest($"Insufficient money in the account. You balance is: {account.Balance}");
 
             // Simulate some processing, for example does User eligable to withdraw money (e.g. check if account is blocked, etc.)
             await Task.Delay(5000);
